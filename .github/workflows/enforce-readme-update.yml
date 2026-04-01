@@ -76,7 +76,6 @@ jobs:
           function checkReadmeUpdate() {
             // Define directories to ignore (infrastructure directories)
             const ignoredDirectories = [
-              'ai_and_connector_sdk',
               'git_hooks',
               '.github',
               '.github/workflows',
