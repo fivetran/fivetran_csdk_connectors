@@ -95,6 +95,7 @@ If a section is irrelevant (e.g., no error handling), the empty stub should be n
   ## Getting started
   Refer to the [Connector SDK Setup Guide](https://fivetran.com/docs/connectors/connector-sdk/setup-guide) to get started.
   ```
+checkin
 * **Features** → Must list concrete features (not left blank or italicized template text).
 * **Configuration file** → Must include a JSON code block showing keys. Must mention that `configuration.json` should not be versioned, for example, as provided below:
   ```markdown
