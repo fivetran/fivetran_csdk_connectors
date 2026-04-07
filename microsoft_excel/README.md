@@ -1,4 +1,4 @@
-# Microsoft Excel File Example
+# Microsoft Excel File Connector Example
 
 ## Connector overview
 
@@ -11,14 +11,24 @@ It's designed to efficiently handle Excel files of various sizes, providing flex
 
 ## Requirements
 
-* [Supported Python versions](https://github.com/fivetran/fivetran-csdk-connectors/blob/main/README.md#requirements)   
-* Operating System:  
-  * Windows 10 or later  
-  * macOS 13 (Ventura) or later
+- [Supported Python versions](https://github.com/fivetran/fivetran-csdk-connectors/blob/main/README.md#requirements)
+- Operating system:
+  - Windows: 10 or later (64-bit only)
+  - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
 
 ## Getting started
 
 Refer to the [Setup Guide](https://fivetran.com/docs/connectors/connector-sdk/setup-guide) to get started.
+
+To initialize a new Connector SDK project using this connector as a starting point, run:
+
+```
+fivetran init --template microsoft_excel
+```
+
+`fivetran init` initializes a new Connector SDK project by setting up the project structure, configuration files, and a connector you can run immediately with `fivetran debug`. For more information on `fivetran init`, refer to the [Connector SDK init documentation](https://fivetran.com/docs/connectors/connector-sdk/technical-reference/init).
+
+> Note: Ensure you have updated the `configuration.json` file with the necessary parameters before running `fivetran debug`. See the [Configuration file](#configuration-file) section for details on the required configuration parameters.
 
 ## Features
 
@@ -34,7 +44,7 @@ Refer to the [Setup Guide](https://fivetran.com/docs/connectors/connector-sdk/se
 
 The connector requires AWS S3 credentials and file information:
 
-```
+```json
 {
   "aws_access_key_id": "<YOUR_AWS_ACCESS_KEY>",
   "aws_secret_access_key": "<YOUR_AWS_SECRET_KEY>",
@@ -44,7 +54,7 @@ The connector requires AWS S3 credentials and file information:
 }
 ```
 
-Note: Ensure that the `configuration.json` file is not checked into version control to protect sensitive information.
+> Note: When submitting connector code as a [Community Connector](https://github.com/fivetran/fivetran-csdk-connectors/tree/main) in the open-source [Connector SDK repository](https://github.com/fivetran/fivetran-csdk-connectors/tree/main), ensure the `configuration.json` file has placeholder values. When adding the connector to your production repository, ensure that the `configuration.json` file is not checked into version control to protect sensitive information.
 
 ## Requirements file
 
@@ -59,19 +69,19 @@ python-calamine
 
 In order to use the `calamine` engine with `pandas` library, you need to include the `python-calamine` package and ensure that the `pandas` version is `equal to or above 2.2`.
 
-Note: The `fivetran_connector_sdk:latest` and `requests:latest` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
-This connector authenticates with AWS using an access key ID and secret access key. These credentials must have permissions to read objects from the specified S3 bucket. You can create these credentials in the AWS IAM console.  To set up authentication:  
+This connector authenticates with AWS using an access key ID and secret access key. These credentials must have permissions to read objects from the specified S3 bucket. You can create these credentials in the AWS IAM console. To set up authentication:
 - Create an IAM user with S3 read access
 - Generate an access key and secret key for this user
 - Add these credentials to your configuration.json file
 
 ## Data handling
 
-The connector processes Excel files using three different methods:  
-1. Pandas (Refer to `upsert_using_pandas` function): Loads the entire Excel file into memory, which is suitable for small to medium-sized files.  
+The connector processes Excel files using three different methods:
+1. Pandas (Refer to `upsert_using_pandas` function): Loads the entire Excel file into memory, which is suitable for small to medium-sized files.
 2. Python-calamine (Refer to `upsert_using_calamine` function): Uses the calamine engine with pandas for faster processing. It loads the entire Excel file into memory but is more memory-efficient due to its optimized data structures. It provides a balance between memory usage and performance, making it suitable for large files. However, it is not recommended for files larger than 1GB as it can cause memory overflow errors.
 3. Openpyxl (Refer to `upsert_using_openpyxl` function): Uses read-only mode for better memory efficiency when processing large files. It streams the data one row at a time, which avoids memory overflow errors but is significantly slower than the `python-calamine` method. It is suitable for very large files where memory usage is a concern.
 
@@ -79,16 +89,16 @@ Data from each method is identical, but upserted into separate tables with ident
 
 ## Error handling
 
-The connector implements error handling in several areas:  
-- Configuration validation: Checks if all required keys are present in the configuration.  
-- File download: Captures exceptions during S3 file download and raises a RuntimeError with details.  
-- Data processing: Wraps the data processing operations in a try-except block to capture and report errors.  
+The connector implements error handling in several areas:
+- Configuration validation: Checks if all required keys are present in the configuration.
+- File download: Captures exceptions during S3 file download and raises a RuntimeError with details.
+- Data processing: Wraps the data processing operations in a try-except block to capture and report errors.
 
-## Tables Created
+## Tables created
 
 The connector creates three tables in your destination:
 
-- `excel_data_pandas` : Contains data upserted using the `pandas` library.
+- `excel_data_pandas`: Contains data upserted using the `pandas` library.
 - `excel_data_calamine`: Contains data upserted using the `calamine` engine with `pandas`.
 - `excel_data_openpyxl`: Contains data upserted using the `openpyxl` library.
 
