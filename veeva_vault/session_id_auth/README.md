@@ -29,7 +29,7 @@ Refer to the [Connector SDK Setup Guide](https://fivetran.com/docs/connectors/co
 To initialize a new Connector SDK project using this connector as a starting point, run:
 
 ```
-fivetran init --template session_id_auth
+fivetran init --template veeva_vault/session_id_auth
 ```
 
 `fivetran init` initializes a new Connector SDK project by setting up the project structure, configuration files, and a connector you can run immediately with `fivetran debug`. For more information on `fivetran init`, refer to the [Connector SDK init documentation](https://fivetran.com/docs/connectors/connector-sdk/technical-reference/init).
