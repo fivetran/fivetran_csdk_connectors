@@ -45,7 +45,7 @@ The connector requires the following configuration parameters to connect to your
     "endpoint": "<YOUR_COUCHBASE_ENDPOINT>",
     "bucket_name": "<YOUR_COUCHBASE_BUCKET_NAME>",
     "scope": "<YOUR_COUCHBASE_SCOPE_NAME>",
-    "collection": "YOUR_COUCHBASE_COLLECTION_NAME",
+    "collection": "<YOUR_COUCHBASE_COLLECTION_NAME>",
     "use_tls": "<true/false>",
     "cert_path": "PATH_TO_YOUR_TLS_CERTIFICATE"
 }
