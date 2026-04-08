@@ -45,10 +45,10 @@ The connector requires the following configuration parameters to connect to your
 {
     "username": "<YOUR_COUCHBASE_USERNAME>",
     "password": "<YOUR_COUCHBASE_PASSWORD>",
-    "endpoint": "YOUR_COUCHBASE_ENDPOINT",
-    "bucket_name": "YOUR_COUCHBASE_BUCKET_NAME",
-    "scope": "YOUR_COUCHBASE_SCOPE_NAME",
-    "collection": "YOUR_COUCHBASE_COLLECTION_NAME"
+    "endpoint": "<YOUR_COUCHBASE_ENDPOINT>",
+    "bucket_name": "<YOUR_COUCHBASE_BUCKET_NAME>",
+    "scope": "<YOUR_COUCHBASE_SCOPE_NAME>",
+    "collection": "<YOUR_COUCHBASE_COLLECTION_NAME>"
 }
 ```
 
