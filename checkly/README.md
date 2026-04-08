@@ -75,8 +75,8 @@ The connector uses Bearer Token authentication with the Checkly API. Authenticat
 
 You'll need to obtain the following credentials:
 
-1. API key: A Checkly API key with read permissions for checks and analytics endpoints
-2. Account ID: Your Checkly account identifier for proper API access
+1. API key: A Checkly API key with read permissions for checks and analytics endpoints.
+2. Account ID: Your Checkly account identifier for proper API access.
 
 ### Steps to obtain credentials
 
