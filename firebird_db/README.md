@@ -10,10 +10,10 @@ The connector maintains tables as defined in the `schema.py` file:
 
 ## Requirements
 
-- [Supported Python versions](https://github.com/fivetran/fivetran-csdk-connectors/blob/main/README.md#requirements)
+- [Supported Python versions](https://github.com/fivetran/fivetran-csdk-connectors/blob/main/README.md#requirements)   
 - Operating system:
-  - Windows 10 or later
-  - macOS 13 (Ventura) or later
+  - Windows: 10 or later (64-bit only)
+  - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
   - Linux: Distributions such as Ubuntu 20.04 or later, Debian 10 or later, or Amazon Linux 2 or later (arm64 or x86_64)
 
 ## Getting started

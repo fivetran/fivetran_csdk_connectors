@@ -64,7 +64,7 @@ This connector does not require any additional packages beyond those provided by
 - Data normalization: `normalize_articles` flattens each `articles[*]` object and maps:
   - `image` → `urlToImage` (to keep parity with existing schema/column names
   - Persists only scalar fields (nested values are JSON-encoded strings)
-- Upserts: Each record is written via `op.upsert(...)` to `NEWS_STORIES`.
+- Upserts: Each record is written via `op.upsert(...)` to `news_stories`.
 - Stop conditions: `fetch_all_news` stops when:
   - Fewer than `page_size` results are returned, or
   - `page * page_size >= totalArticles`, or
@@ -78,7 +78,7 @@ This connector does not require any additional packages beyond those provided by
 
 ## Tables created
 
-The connector creates the `NEWS_STORIES` table.
+The connector creates the `news_stories` table.
 
 ### NEWS_STORIES
 
