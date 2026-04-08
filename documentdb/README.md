@@ -156,9 +156,9 @@ This connector requires that the following prerequisites exist in your DocumentD
 Example document structure:
 ```json
 {
-  "_id": "ObjectId(...)",
-  "created_at": "ISODate(2023-01-01T00:00:00Z)",
-  "updated_at": "ISODate(2023-01-01T00:00:00Z)",
+  "_id": ObjectId("..."),
+  "created_at": ISODate("2023-01-01T00:00:00Z"),
+  "updated_at": ISODate("2023-01-01T00:00:00Z"),
   "metadata": {"source": "web"}
 }
 ```
