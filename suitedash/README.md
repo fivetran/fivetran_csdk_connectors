@@ -51,9 +51,10 @@ The configuration file defines the authentication credentials required to connec
 
 ## Requirements file
 
-The requirements.txt file specifies additional Python libraries required by the connector. Following Fivetran best practices, this connector doesn't require additional dependencies.
+This connector uses only the pre-installed packages in the Fivetran environment and does not require any additional dependencies.
 
 > Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+
 
 ## Authentication
 

@@ -14,7 +14,7 @@ This example demonstrates how to build a Fivetran Connector SDK integration for 
 
 ## Getting started
 
-Refer to the [Connector SDK setup guide](https://fivetran.com/docs/connectors/connector-sdk/setup-guide) to get started.
+Refer to the [Connector SDK Setup Guide](https://fivetran.com/docs/connectors/connector-sdk/setup-guide) to get started.
 
 To initialize a new Connector SDK project using this connector as a starting point, run:
 
@@ -53,8 +53,8 @@ The `requirements.txt` file specifies any additional Python libraries required b
 Example content of `requirements.txt`:
 
 ```
-requests
-dateutil
+python_dateutil==2.9.0.post0
+pytz==2024.2
 ```
 
 > Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.

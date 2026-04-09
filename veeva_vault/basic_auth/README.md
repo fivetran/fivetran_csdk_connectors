@@ -92,7 +92,7 @@ Pagination continues until `next_page` is no longer returned.
 
 ## Tables created
 
-The connector creates tables dynamically based on the object types defined in Veeva Vault. Each table corresponds to an object type and includes all fields defined in the `Objecttype` metadata.:
+The connector creates tables dynamically based on the object types defined in Veeva Vault. Each table corresponds to an object type and includes all fields defined in the `Objecttype` metadata.
 
 Here is an example of the `DOCUMENT__V` table structure for the `document__v` object type:
 
