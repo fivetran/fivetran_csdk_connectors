@@ -1,4 +1,4 @@
-# IBM Informix Connector using ibm_db Connector Example
+# IBM Informix using ibm_db Connector Example
 
 ## Connector overview
 
