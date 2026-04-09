@@ -11,6 +11,7 @@ This example demonstrates how to build a connector for [Microsoft Intune](https:
 - Operating system:
   - Windows: 10 or later (64-bit only)
   - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
+  - Linux: Distributions such as Ubuntu 20.04 or later, Debian 10 or later, or Amazon Linux 2 or later (arm64 or x86_64)
 
 ## Getting started
 
@@ -40,9 +41,9 @@ The connector expects a `configuration.json` file with the following structure:
 
 ```json
 {
-  "tenant_id": "YOUR_TENANT_ID",
-  "client_id": "YOUR_CLIENT_ID",
-  "client_secret": "YOUR_CLIENT_SECRET"
+  "tenant_id": "<YOUR_TENANT_ID>",
+  "client_id": "<YOUR_CLIENT_ID>",
+  "client_secret": "<YOUR_CLIENT_SECRET>"
 }
 ```
 

@@ -15,6 +15,7 @@ It's designed to efficiently handle Excel files of various sizes, providing flex
 - Operating system:
   - Windows: 10 or later (64-bit only)
   - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
+  - Linux: Distributions such as Ubuntu 20.04 or later, Debian 10 or later, or Amazon Linux 2 or later (arm64 or x86_64)
 
 ## Getting started
 
@@ -74,9 +75,9 @@ In order to use the `calamine` engine with `pandas` library, you need to include
 ## Authentication
 
 This connector authenticates with AWS using an access key ID and secret access key. These credentials must have permissions to read objects from the specified S3 bucket. You can create these credentials in the AWS IAM console. To set up authentication:
-- Create an IAM user with S3 read access
-- Generate an access key and secret key for this user
-- Add these credentials to your configuration.json file
+1. Create an IAM user with S3 read access.
+2. Generate an access key and secret key for this user.
+3. Add these credentials to your `configuration.json` file.
 
 ## Data handling
 

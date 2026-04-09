@@ -61,8 +61,8 @@ The connector requires the following configuration parameters:
 The connector requires the following Python packages:
 
 ```
-neo4j
-neo4j-driver
+neo4j==6.1.0
+neo4j-driver==5.28.3
 ```
 
 > Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.

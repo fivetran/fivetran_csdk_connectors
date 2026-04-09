@@ -86,6 +86,11 @@ Each sub-implementation demonstrates the following data handling patterns:
 
 The connector upserts each fetched record to the destination table using `op.upsert()` and checkpoints state using `op.checkpoint()`.
 
+## Error handling
+
+The example implementations fail fast on HTTP and client-library errors instead of suppressing them. In `odata_version_4/connector.py`, the `update()` function relies on the underlying `requests`-based client to surface request failures, including HTTP errors and timeouts, so failed API calls stop the sync and make the issue visible during debugging. In `odata_version_2_using_pyodata/connector.py` and `odata_version_4_using_python_odata/connector.py`, the `update()` functions similarly propagate exceptions raised by `pyodata` and `python-odata` when requests fail or responses cannot be processed.
+
+This example does not add custom retry logic in the top-level flow. If you extend these examples for production use, consider adding explicit timeout values, retry policies for transient failures, and logging around the request boundaries in each implementation's `update()` function.
 ## Tables created
 
 ### odata_version_4

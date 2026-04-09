@@ -59,11 +59,9 @@ Configuration parameters:
 
 ## Requirements file
 
-The Oktopost connector uses only built-in Python modules and pre-installed packages, so no `requirements.txt` file is needed.
+This connector uses only the pre-installed packages in the Fivetran environment and does not require any additional dependencies.
 
-The connector relies on:
-- Built-in Python modules: `csv`, `zipfile`, `json`, `datetime`, `urllib.parse`
-- Pre-installed packages: `fivetran_connector_sdk:latest` and `requests:latest`
+> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 > Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 

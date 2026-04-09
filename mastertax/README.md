@@ -10,6 +10,7 @@ This connector fetches data extracts from the MasterTax API provided by [ADP](ht
 - Operating system:
   - Windows: 10 or later (64-bit only)
   - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
+  - Linux: Distributions such as Ubuntu 20.04 or later, Debian 10 or later, or Amazon Linux 2 or later (arm64 or x86_64)
 
 ## Getting started
 
@@ -39,8 +40,8 @@ The connector reads configuration details from a `configuration.json` file. Requ
 
 ```json
 {
-  "clientId": "YOUR_CLIENT_ID",
-  "clientSecret": "YOUR_CLIENT_SECRET",
+  "clientId": "<YOUR_CLIENT_ID>",
+  "clientSecret": "<YOUR_CLIENT_SECRET>",
   "crtFile": "<certificate string>",
   "keyFile": "<key string>"
 }
