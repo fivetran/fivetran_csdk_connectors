@@ -14,12 +14,10 @@ It supports syncing multiple Accelo entities including:
 
 The connector is designed for incremental sync using timestamp fields and safely handles rate limits and retries.
 
-This example was contributed by community member Ahmed Zedan.
-API reference: [Accelo API Docs](https://api.accelo.com/docs/#introduction).
 
 ## Accreditation
 
-This example was contributed by our amazing community member Ahmed Zedan
+This example was contributed by our amazing community member Ahmed Zedan . API reference: [Accelo API Docs](https://api.accelo.com/docs/#introduction).
 
 ## Requirements
 
