@@ -61,7 +61,7 @@ Configuration parameters:
     - Absolute format: "2024-01-01 2026-02-03" (specific date range)
   > Note: "today" keyword in absolute ranges is automatically converted to current date
 
-You can also define the search array as a constant in `config.py`. The connector will use these defaults values if no `searches` key is provided in the `configuration.json`.
+You can also define the search array as a constant in `config.py`. The connector will use these default values if no `searches` key is provided in the `configuration.json`.
 
 > Note: When submitting connector code as a [Community Connector](https://github.com/fivetran/fivetran-csdk-connectors/tree/main) in the open-source [Connector SDK repository](https://github.com/fivetran/fivetran-csdk-connectors/tree/main), ensure the `configuration.json` file has placeholder values. When adding the connector to your production repository, ensure that the `configuration.json` file is not checked into version control to protect sensitive information.
 
