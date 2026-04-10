@@ -132,7 +132,8 @@ If a section is irrelevant (e.g., no error handling), the empty stub should be n
   redshift_connector
   ```
 
-> Note: Some packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`. Refer to the [pre-installed packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) documentation for the full list.  ```
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+
 * **Authentication** → Must specify auth method (API key, OAuth2, etc). For example, as provided below:
   ```markdown
   ## Authentication
