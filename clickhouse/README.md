@@ -1,4 +1,4 @@
-# ClickHouse Database Example
+# ClickHouse Connector Example
 
 ## Connector overview
 
@@ -61,7 +61,7 @@ The connector requires the clickhouse_connect Python library for connecting to C
 clickhouse_connect==0.8.17
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -110,7 +110,7 @@ The `TEST_TABLE` table contains dummy data with the following schema:
 
 ## Additional files
 
-`clickhouse_dummy_data_generator.py`: This python file contains functions to add dummy data to the Clickhouse database. It creates dummy database and table and generates random records with unique IDs and timestamps. This dummy data is inserted into the Clickhouse table for testing purposes. In production, you will not need to insert dummy data, as the connector will work with your existing Clickhouse database.
+**`clickhouse_dummy_data_generator.py`**: This python file contains functions to add dummy data to the Clickhouse database. It creates dummy database and table and generates random records with unique IDs and timestamps. This dummy data is inserted into the Clickhouse table for testing purposes. In production, you will not need to insert dummy data, as the connector will work with your existing Clickhouse database.
 
 ## Additional considerations
 

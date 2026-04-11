@@ -1,14 +1,8 @@
-# GitHub Repository Traffic Connector
-
-This connector syncs GitHub repository traffic data using the GitHub REST API. It collects the following information:
-- Repository views (count and unique visitors)
-- Repository clones (count and unique cloners)
-- Top referral sources
-- Top popular content paths
+# GitHub Repository Traffic Connector Example
 
 ## Connector overview
 
-This connector syncs GitHub repository traffic metrics (views, clones, referrers, and popular content paths) using the GitHub REST API. It demonstrates how to work with GitHub's traffic analytics endpoints, handle limited historical data (14 days), and use Personal Access Token authentication.
+This connector syncs GitHub repository traffic data using the GitHub REST API. It collects repository views (count and unique visitors), repository clones (count and unique cloners), top referral sources, and top popular content paths. It demonstrates how to work with GitHub's traffic analytics endpoints, handle limited historical data (14 days), and use Personal Access Token authentication.
 
 ## Requirements
 
@@ -56,7 +50,7 @@ Update the `configuration.json` file with your GitHub Personal Access Token and 
 
 This connector uses only pre-installed packages in the Fivetran environment.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 

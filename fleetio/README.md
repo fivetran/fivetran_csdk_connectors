@@ -1,13 +1,10 @@
 # Fleetio Connector Example
 
-The Fleetio Connector allows Fleetio customers to easily pull their data into their destination databases with Fivetran.
-For more information about Fleetio, check out [Fleetio site](https://www.fleetio.com) or [contact Fleetio](https://www.fleetio.com/contact)!
-If you need more details about the endpoints pulled by the connector, visit Fleetio's [API docs](https://developer.fleetio.com/docs/category/api).
-
 ## Connector overview
 
-This connector allows Fleetio customers on a [Professional Plan](https://www.fleetio.com/pricing) or above to bring in their most crucial data into any destination systems.
-With their data all in one place, a customer can create custom reporting for insight into the operation of their fleets.
+The Fleetio Connector allows Fleetio customers to easily pull their data into their destination databases with Fivetran. For more information about Fleetio, check out [Fleetio site](https://www.fleetio.com) or [contact Fleetio](https://www.fleetio.com/contact). If you need more details about the endpoints pulled by the connector, visit Fleetio's [API docs](https://developer.fleetio.com/docs/category/api).
+
+This connector allows Fleetio customers on a [Professional Plan](https://www.fleetio.com/pricing) or above to bring in their most crucial data into any destination systems. With their data all in one place, a customer can create custom reporting for insight into the operation of their fleets.
 
 ## Accreditation
 
@@ -59,7 +56,7 @@ We currently only need a package for flattening the JSON information that's retu
 flatten_json==0.1.14
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Pagination
 

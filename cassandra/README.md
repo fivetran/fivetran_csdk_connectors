@@ -1,4 +1,4 @@
-# Cassandra Database Example
+# Cassandra Connector Example
 
 ## Connector overview
 
@@ -68,7 +68,7 @@ cassandra-driver
 python-dateutil
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -128,7 +128,7 @@ The `SAMPLE_TABLE` contains sample data from the Cassandra database. The schema 
 
 ## Additional files
 
-- `adding_dummy_data_to_cassandra.py`: This python file contains functions to add dummy data to the Cassandra database. It creates dummy database and table and generates random records with unique IDs and timestamps. This dummy data is inserted into the Cassandra table for testing purposes. In production, you will not need to insert dummy data, as the connector will work with your existing Cassandra database.
+- **`adding_dummy_data_to_cassandra.py`**: This python file contains functions to add dummy data to the Cassandra database. It creates dummy database and table and generates random records with unique IDs and timestamps. This dummy data is inserted into the Cassandra table for testing purposes. In production, you will not need to insert dummy data, as the connector will work with your existing Cassandra database.
 
 ## Additional considerations
 

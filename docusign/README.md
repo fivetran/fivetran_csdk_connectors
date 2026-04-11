@@ -60,7 +60,7 @@ Configuration parameters:
 
 This connector uses the `requests` library, which is pre-installed in the Fivetran environment. No additional libraries are required, so the `requirements.txt` file can be empty.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 

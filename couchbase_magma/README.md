@@ -1,5 +1,7 @@
 # Couchbase Magma Connector Example
 
+## Connector overview
+
 This connector example demonstrates how to sync data from a self-managed Couchbase Server (local, on-premises, or self-hosted in the cloud) using the Magma storage engine with the Connector SDK.
 It connects to a Couchbase instance, runs SQL++ (N1QL) queries to retrieve data from a specified Magma bucket, scope, and collection, and streams the results efficiently to a destination table—following best practices for handling large datasets.
 
@@ -61,7 +63,7 @@ The connector requires the Couchbase Python SDK:
 couchbase==4.3.6
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
