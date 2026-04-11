@@ -58,7 +58,7 @@ This connector requires the `hdbcli` library to connect to SAP HANA databases.
 hdbcli==2.25.29
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -78,8 +78,8 @@ The connector uses a batch-based approach for data retrieval rather than traditi
 This approach accomplishes the following:
 
 1. Prevents memory overflow when handling large datasets.
-2. Enables incremental processing of data without loading the entire result set
-3. Allows for checkpointing progress after each batch
+2. Enables incremental processing of data without loading the entire result set.
+3. Allows for checkpointing progress after each batch.
 
 Refer to the `fetch_and_upsert()` function, specifically the `cursor.fetchmany(batch_size)` implementation.
 

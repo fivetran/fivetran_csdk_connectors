@@ -105,17 +105,17 @@ Sync 3 (long downtime - ~2 years): [02/14/2025 - 12/17/2026] (30-day overlap, 67
 
 The connector uses only the pre-installed packages in the Fivetran environment and does not require a `requirements.txt` file.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
 The SAM.gov API uses API key authentication. To obtain an API key:
 
-1. Create an account on [SAM.gov](https://sam.gov)
-2. Navigate to your Account Details page
-3. Enter your account password to access API key information
-4. Generate a new public API key
-5. Copy the API key (it's visible until you navigate away from the page)
+1. Create an account on [SAM.gov](https://sam.gov).
+2. Navigate to your Account Details page.
+3. Enter your account password to access API key information.
+4. Generate a new public API key.
+5. Copy the API key (it's visible until you navigate away from the page).
 
 The API key should be included in every request as the `api_key` parameter. Different user roles (federal vs non-federal) have different rate limits.
 
@@ -131,7 +131,7 @@ The connector implements pagination using the SAM.gov API's `limit` and `offset`
 
 The connector processes SAM.gov opportunity data through several transformation steps (refer to the `process_main_opportunity_record` and `process_breakout_tables` functions):
 
-1. Main opportunity table - Stores core opportunity information with flattened nested objects
+1. Main opportunity table - Stores core opportunity information with flattened nested objects.
 2. Breakout tables - Separate tables for array data with foreign key relationships:
   - `point_of_contact` - Contact information for each opportunity
   - `naics_code` - NAICS classification codes

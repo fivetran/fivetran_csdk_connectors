@@ -8,8 +8,8 @@ This example demonstrates how to build a Fivetran Connector SDK integration for 
 
 - [Supported Python versions](https://github.com/fivetran/fivetran-csdk-connectors/blob/main/README.md#requirements)
 - Operating system:
-  - Windows 10 or later
-  - macOS 13 (Ventura) or later
+  - Windows: 10 or later (64-bit only)
+  - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
   - Linux: Distributions such as Ubuntu 20.04 or later, Debian 10 or later, or Amazon Linux 2 or later (arm64 or x86_64)
 
 ## Getting started
@@ -57,7 +57,7 @@ python_dateutil==2.9.0.post0
 pytz==2024.2
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -93,10 +93,6 @@ Sample data structure:
 | App ID | Date       | Country code | iPhone downloads | iPhone revenue | ... |
 |--------|------------|--------------|------------------|----------------|-----|
 | 123456 | 2024-05-01 | US           | 1000             | 5000           | ... |
-
-## Additional files
-
-This example does not include additional files beyond the main connector script and configuration.
 
 ## Additional considerations
 

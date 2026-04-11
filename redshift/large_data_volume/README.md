@@ -79,7 +79,7 @@ The connector requires the following packages, which should be listed in the `re
 redshift_connector
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -117,8 +117,8 @@ The connector automatically detects the schema of each table and creates corresp
 ## Additional files
 
 The connector includes the following additional files:
-- `table_spec.py`: This file defines the schema for each table in the Redshift database. It is used when automatic schema detection is disabled. You can customize this file to specify the exact schema for each table, including column names and data types.
-- `redshift_client.py`: This file contains the logic for connecting to the Redshift database and executing SQL queries. It encapsulates the connection handling, query execution, and data fetching logic.
+- **`table_spec.py`**: This file defines the schema for each table in the Redshift database. It is used when automatic schema detection is disabled. You can customize this file to specify the exact schema for each table, including column names and data types.
+- **`redshift_client.py`**: This file contains the logic for connecting to the Redshift database and executing SQL queries. It encapsulates the connection handling, query execution, and data fetching logic.
 
 ## Additional considerations
 

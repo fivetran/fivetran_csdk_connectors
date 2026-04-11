@@ -108,7 +108,7 @@ boto3==1.35.0
 pyarrow==17.0.0
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -124,13 +124,13 @@ The connector handles large datasets by leveraging Redshift's `UNLOAD` command t
 
 The connector uses the following workflow:
 
-1. Schema discovery: Connects to Redshift and discovers tables and columns (or uses predefined `TABLE_SPECS`)
-2. Table plan building: Builds sync plans for each table including primary keys, replication strategy, and column selection
-3. `UNLOAD` execution: For each table, executes UNLOAD command to export data to S3 as Parquet files
-4. S3 reading: Reads Parquet files from S3 using PyArrow S3FileSystem for memory-efficient streaming
-5. Data sync: Upserts records using the connector SDK
-6. Checkpointing: Periodically saves sync progress (every `CHECKPOINT_EVERY_ROWS` rows)
-7. Cleanup: Deletes all temporary S3 files after successful sync
+1. Schema discovery: Connects to Redshift and discovers tables and columns (or uses predefined `TABLE_SPECS`).
+2. Table plan building: Builds sync plans for each table including primary keys, replication strategy, and column selection.
+3. `UNLOAD` execution: For each table, executes UNLOAD command to export data to S3 as Parquet files.
+4. S3 reading: Reads Parquet files from S3 using PyArrow S3FileSystem for memory-efficient streaming.
+5. Data sync: Upserts records using the connector SDK.
+6. Checkpointing: Periodically saves sync progress (every `CHECKPOINT_EVERY_ROWS` rows).
+7. Cleanup: Deletes all temporary S3 files after successful sync.
 
 ## Error handling
 
@@ -148,9 +148,9 @@ The connector automatically detects the schema of each table and creates corresp
 ## Additional files
 
 The connector includes the following additional files:
-- `table_spec.py` - This file defines the schema for each table in the Redshift database. The connector uses it when automatic schema detection is disabled. You can customize this file to specify the exact schema for each table, including column names and data types.
-- `redshift_client.py` - This file contains the logic for connecting to the Redshift database and executing SQL queries. It encapsulates the connection handling, query execution, and data fetching logic.
-- `s3_client.py` - This file contains the logic for interacting with S3, including reading Parquet files and deleting temporary files after sync.
+- **`table_spec.py`** - This file defines the schema for each table in the Redshift database. The connector uses it when automatic schema detection is disabled. You can customize this file to specify the exact schema for each table, including column names and data types.
+- **`redshift_client.py`** - This file contains the logic for connecting to the Redshift database and executing SQL queries. It encapsulates the connection handling, query execution, and data fetching logic.
+- **`s3_client.py`** - This file contains the logic for interacting with S3, including reading Parquet files and deleting temporary files after sync.
 
 ## Additional considerations
 

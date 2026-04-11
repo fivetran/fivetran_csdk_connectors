@@ -61,7 +61,7 @@ pandas==2.3.0
 solace-pubsubplus==1.10.0
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -117,6 +117,21 @@ This connector includes robust error handling at various stages:
 - Message processing errors: Malformed or unexpected payloads are logged and skipped without halting the sync.
 - Upsert failures: Logged per record, allowing the connector to continue processing other events.
 - Timeouts and retries: Configurable timeout ensures the sync completes even if the queue is empty or slow.
+
+## Tables created
+
+The connector creates a single table named `solace_events` (refer to the `schema()` function):
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `event_id` | STRING | Primary key – hash-based unique identifier derived from topic, timestamp, and payload |
+| `timestamp` | STRING | Primary key – event timestamp |
+| `message_id` | STRING | Optional message ID from the payload |
+| `topic` | STRING | Source Solace topic or queue name |
+| `message_payload` | STRING | Raw message body |
+| `message_type` | STRING | Message type extracted from payload (default: `"raw"`) |
+| `details` | STRING | Optional details field from payload |
+| `processed_at` | STRING | Timestamp when the message was processed by the connector |
 
 ## Additional considerations
 

@@ -10,8 +10,8 @@ The connector maintains one table, `event`. This table contains application even
 
 - [Supported Python versions](https://github.com/fivetran/fivetran-csdk-connectors/blob/main/README.md#requirements)
 - Operating system:
-  - Windows 10 or later
-  - macOS 13 (Ventura) or later
+  - Windows: 10 or later (64-bit only)
+  - macOS: 13 (Ventura) or later (Apple Silicon [arm64] or Intel [x86_64])
   - Linux: Distributions such as Ubuntu 20.04 or later, Debian 10 or later, or Amazon Linux 2 or later (arm64 or x86_64)
 
 ## Getting started
@@ -55,7 +55,7 @@ The connector requires configuration with your Talon.one credentials and sync se
 
 The connector uses minimal external dependencies. The `requirements.txt` file should be empty because all required packages are pre-installed in the Fivetran environment.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -67,11 +67,11 @@ This connector uses Talon.one Management API authentication:
 ## Data handling
 
 The connector processes data in the following way:
-1. Connects to Talon.one Management API using provided credentials
-2. Fetches application events for the configured application ID (currently set to 5)
-3. Implements pagination to handle large datasets
-4. Converts list-type fields to JSON strings for database compatibility
-5. Uses incremental sync based on `createdAfter` parameter
+1. Connects to Talon.one Management API using provided credentials.
+2. Fetches application events for the configured application ID (currently set to 5).
+3. Implements pagination to handle large datasets.
+4. Converts list-type fields to JSON strings for database compatibility.
+5. Uses incremental sync based on `createdAfter` parameter.
 
 The connector uses incremental sync based on the `created` field to avoid duplicate data and ensure efficient synchronization.
 

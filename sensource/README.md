@@ -76,7 +76,7 @@ Configuration parameters:
 
 The `requirements.txt` file specifies the Python libraries required by the connector. For the SenSource connector, no additional dependencies are needed as it only uses the pre-installed `fivetran_connector_sdk` and `requests` packages.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -100,11 +100,11 @@ Date range processing - Refer to `generate_date_ranges()` function and the main 
 
 The connector processes data in the following way:
 
-1. Static data: Fetches reference data (locations, sites, zones, spaces, sensors) without state tracking
-2. Traffic data: Fetches hourly traffic metrics by zone with configurable metrics
-3. Occupancy data: Fetches hourly occupancy metrics by space with configurable metrics
-4. State management: Tracks the last synced date to enable incremental updates
-5. Data transformation: Converts API responses to standardized format for Fivetran
+1. Static data: Fetches reference data (locations, sites, zones, spaces, sensors) without state tracking.
+2. Traffic data: Fetches hourly traffic metrics by zone with configurable metrics.
+3. Occupancy data: Fetches hourly occupancy metrics by space with configurable metrics.
+4. State management: Tracks the last synced date to enable incremental updates.
+5. Data transformation: Converts API responses to standardized format for Fivetran.
 
 Data processing - Refer to `fetch_data()` function and `fetch_static_data()` function
 
