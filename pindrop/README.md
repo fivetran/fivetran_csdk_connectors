@@ -54,7 +54,7 @@ The connector requires OAuth2 client credentials for authentication. The base UR
 
 This connector does not require a `requirements.txt` file as all necessary dependencies are pre-installed in the Fivetran environment. The connector uses standard Python libraries (`json`, `datetime`, `time`, `csv`, `io`, `typing`) and the `requests` library, which are all available by default.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 

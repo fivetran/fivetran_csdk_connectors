@@ -64,7 +64,7 @@ pyodata==1.11.1
 python-odata==0.6.3
 ```
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -127,8 +127,8 @@ This example does not add custom retry logic in the top-level flow. If you exten
 
 ## Additional files
 
-- `odata_version_4/ODataClient.py` – Custom OData client class for OData version 4 services. Provides methods for `upsert_entity()`, `upsert_multiple_entity()`, `add_batch()`, and `upsert_batch()` with support for query options, state management, and pagination.
-- `odata_version_2_using_pyodata/ODataClient.py` – Custom OData client class for OData version 2 services using the `pyodata` library. Provides the same interface as the version 4 client.
+- **`odata_version_4/ODataClient.py`** – Custom OData client class for OData version 4 services. Provides methods for `upsert_entity()`, `upsert_multiple_entity()`, `add_batch()`, and `upsert_batch()` with support for query options, state management, and pagination.
+- **`odata_version_2_using_pyodata/ODataClient.py`** – Custom OData client class for OData version 2 services using the `pyodata` library. Provides the same interface as the version 4 client.
 
 ## Additional considerations
 

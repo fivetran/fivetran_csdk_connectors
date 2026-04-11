@@ -61,7 +61,7 @@ The connector requires the following configuration parameters:
 
 The connector does not require any additional Python packages beyond the Fivetran Connector SDK.
 
-> Note: The `fivetran_connector_sdk:latest`, `requests:2.33.0`, `grpcio:1.78.0`, and `grpcio-tools:1.78.0` packages are pre-installed in the Fivetran environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
+> Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication
 
@@ -69,7 +69,7 @@ This connector uses Bearer token authentication to access the Prefect Cloud API.
 
 To obtain your API credentials:
 
-1. Log in to your [Prefect Cloud] (https://app.prefect.cloud/) account.
+1. Log in to your [Prefect Cloud](https://app.prefect.cloud/) account.
 2. Navigate to your account settings and select **API Keys**.
 3. Generate a new API key with appropriate permissions.
 4. Make a note of the API key. You will need to add it to the `configuration.json` file.
