@@ -126,10 +126,6 @@ The `SAMPLE_TABLE` contains sample data from the Cassandra database. The schema 
 }
 ```
 
-## Additional files
-
-- **`adding_dummy_data_to_cassandra.py`**: This python file contains functions to add dummy data to the Cassandra database. It creates dummy database and table and generates random records with unique IDs and timestamps. This dummy data is inserted into the Cassandra table for testing purposes. In production, you will not need to insert dummy data, as the connector will work with your existing Cassandra database.
-
 ## Additional considerations
 
 The examples provided are intended to help you effectively use Fivetran's Connector SDK. While we've tested the code, Fivetran cannot be held responsible for any unexpected or negative consequences that may arise from using these examples. For inquiries, please reach out to our Support team.
