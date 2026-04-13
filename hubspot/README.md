@@ -51,7 +51,7 @@ The connector requires the following configuration parameters:
 
 ```json
 {
-    "api_token": "<your_hubspot_api_token>",
+    "api_token": "<YOUR_HUBSPOT_API_TOKEN>",
     "initial_sync_start_date": "2025-01-01T00:00:00.000Z"
 }
 ```
@@ -60,12 +60,7 @@ The connector requires the following configuration parameters:
 
 ## Requirements file
 
-This connector requires the following Python packages:
-
-```
-requests==2.33.0
-```
-
+This connector does not require any additional Python packages beyond what is pre-installed in the Fivetran environment. 
 > Note: [Some packages](https://fivetran.com/docs/connector-sdk/technical-reference#preinstalledpackages) are pre-installed in the Connector SDK runtime environment. To avoid dependency conflicts, do not declare them in your `requirements.txt`.
 
 ## Authentication

@@ -17,7 +17,7 @@ The connector is designed for incremental sync using timestamp fields and safely
 
 ## Accreditation
 
-This example was contributed by our amazing community member Ahmed Zedan . API reference: [Accelo API Docs](https://api.accelo.com/docs/#introduction).
+This example was contributed by community member Ahmed Zedan. For the API reference, see [Accelo API Docs](https://api.accelo.com/docs/#introduction).
 
 ## Requirements
 
