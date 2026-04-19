@@ -112,15 +112,6 @@ Refer to `retry_with_backoff(func, max_retries, base_delay, operation_name)`.
 
 All HTTP calls — token refresh, API requests, and file downloads — are wrapped in `retry_with_backoff`, which retries on status codes 429, 500, 502, 503, and 504 using exponential backoff. The delay formula is `base_delay_seconds × 2^attempt`, with the number of attempts controlled by `max_retries`. When retries are exhausted, a `RuntimeError` is raised for Fivetran compliance. A 401 response raises `RuntimeError` immediately without retrying. Failed file downloads log a warning and skip the affected report so the rest of the sync continues.
 
-## Logging
-
-The connector provides detailed logging with consistent formatting:
-
-- Territory information – All channel/studio logs include territory information
-- Progress tracking – Clear indication of initial vs incremental sync mode
-- Checkpoint messages – Detailed checkpointing information with context
-- Error details – Comprehensive error logging for debugging
-
 
 ## Tables created
 
