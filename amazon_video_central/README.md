@@ -51,9 +51,7 @@ The connector requires the following configuration parameters in `configuration.
   "account_id": "<YOUR_ACCOUNT_ID>",
   "report_group_ids": "<YOUR_REPORT_GROUP_IDS>",
   "initial_sync_start": "<YOUR_INITIAL_SYNC_START>",
-  "fernet_key": "<YOUR_FERNET_KEY>",
-  "max_retries": "<YOUR_MAX_RETRIES>",
-  "base_delay_seconds": "<YOUR_BASE_DELAY_SECONDS>"
+  "fernet_key": "<YOUR_FERNET_KEY>"
 }
 ```
 
@@ -65,8 +63,6 @@ Configuration parameters:
 - `report_group_ids` (required) – Comma-separated list of report group IDs to sync (e.g., `channels,channelsPremium`).
 - `initial_sync_start` (required) – Start date for the initial sync in ISO 8601 format (e.g., `2020-01-01T00:00:00.000Z`).
 - `fernet_key` (required) – Base64-encoded Fernet key used to encrypt the refresh token in state.
-- `max_retries` (optional) – Maximum retry attempts for failed requests. Defaults to `5`.
-- `base_delay_seconds` (optional) – Base delay in seconds for exponential backoff. Defaults to `30`.
 
 > Note: When submitting connector code as a [Community Connector](https://github.com/fivetran/fivetran_csdk_connectors/tree/main) in the open-source [Connector SDK repository](https://github.com/fivetran/fivetran_csdk_connectors/tree/main), ensure the `configuration.json` file has placeholder values. When adding the connector to your production repository, ensure that the `configuration.json` file is not checked into version control to protect sensitive information.
 
@@ -110,7 +106,7 @@ On subsequent syncs the connector uses `last_sync_time` from state to fetch only
 
 Refer to `retry_with_backoff(func, max_retries, base_delay, operation_name)`.
 
-All HTTP calls — token refresh, API requests, and file downloads — are wrapped in `retry_with_backoff`, which retries on status codes 429, 500, 502, 503, and 504 using exponential backoff. The delay formula is `base_delay_seconds × 2^attempt`, with the number of attempts controlled by `max_retries`. When retries are exhausted, a `RuntimeError` is raised for Fivetran compliance. A 401 response raises `RuntimeError` immediately without retrying. Failed file downloads log a warning and skip the affected report so the rest of the sync continues.
+All HTTP calls — token refresh, API requests, and file downloads — are wrapped in `retry_with_backoff`, which retries on status codes 429, 500, 502, 503, and 504 using exponential backoff with configurable attempts and base delay controlled by `__DEFAULT_MAX_RETRIES` and `__DEFAULT_BASE_DELAY_SECONDS` connector constants. When retries are exhausted, a `RuntimeError` is raised for Fivetran compliance. A 401 response raises `RuntimeError` immediately without retrying. Failed file downloads log a warning and skip the affected report so the rest of the sync continues.
 
 
 ## Tables created

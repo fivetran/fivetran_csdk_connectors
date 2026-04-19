@@ -51,6 +51,14 @@ from cryptography.fernet import Fernet
 # For base64 encoding/decoding of encrypted tokens
 import base64
 
+# For cleaning table names
+import re
+
+__TOKEN_URL = "https://api.amazon.co.uk/auth/o2/token"
+__DEFAULT_MAX_RETRIES = 5
+__DEFAULT_BASE_DELAY_SECONDS = 30
+__REQUEST_TIMEOUT = 30
+
 
 def validate_configuration(configuration: dict):
     """
@@ -128,7 +136,10 @@ def decrypt_token(encrypted_token: str, fernet_key: str) -> str:
 
 
 def retry_with_backoff(
-    func: Callable, max_retries: int = 5, base_delay: int = 30, operation_name: str = "operation"
+    func: Callable,
+    max_retries: int = __DEFAULT_MAX_RETRIES,
+    base_delay: int = __DEFAULT_BASE_DELAY_SECONDS,
+    operation_name: str = "operation",
 ) -> Any:
     """
     Execute a function with exponential backoff retry logic for 429 errors.
@@ -172,6 +183,18 @@ def retry_with_backoff(
     raise RuntimeError(f"Unexpected error in {operation_name} retry logic")
 
 
+def _post_token_request(data: dict, headers: dict) -> requests.Response:
+    return requests.post(__TOKEN_URL, data=data, headers=headers, timeout=__REQUEST_TIMEOUT)
+
+
+def _get_api_request(url: str, headers: dict, params: Optional[Dict]) -> requests.Response:
+    return requests.get(url, headers=headers, params=params, timeout=__REQUEST_TIMEOUT)
+
+
+def _get_download_request(download_url: str) -> requests.Response:
+    return requests.get(download_url, timeout=__REQUEST_TIMEOUT)
+
+
 def get_access_token(configuration: Dict[str, Any], state: Dict[str, Any]) -> tuple[str, str]:
     """
     Get a new access token using the refresh token with retry logic for rate limiting.
@@ -183,8 +206,6 @@ def get_access_token(configuration: Dict[str, Any], state: Dict[str, Any]) -> tu
     Returns:
         Tuple of (access_token, new_refresh_token)
     """
-    token_url = "https://api.amazon.co.uk/auth/o2/token"
-
     # Get Fernet key from configuration
     fernet_key = configuration["fernet_key"]
 
@@ -216,18 +237,8 @@ def get_access_token(configuration: Dict[str, Any], state: Dict[str, Any]) -> tu
 
     log.info("Refreshing access token")
 
-    # Create a function to execute the token request
-    def make_token_request():
-        return requests.post(token_url, data=data, headers=headers)
-
-    # Use the retry function with exponential backoff
-    max_retries = int(configuration.get("max_retries", "5"))
-    base_delay = int(configuration.get("base_delay_seconds", "30"))
     response = retry_with_backoff(
-        make_token_request,
-        max_retries=max_retries,
-        base_delay=base_delay,
-        operation_name="token refresh",
+        lambda: _post_token_request(data, headers), operation_name="token refresh"
     )
 
     if response.status_code != 200:
@@ -258,15 +269,8 @@ def make_api_request(
     """
     headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
 
-    # Create a function to execute the API request
-    def make_request():
-        return requests.get(url, headers=headers, params=params)
-
-    # Use the retry function with exponential backoff
-    max_retries = int(configuration.get("max_retries", "5")) if configuration else 5
-    base_delay = int(configuration.get("base_delay_seconds", "30")) if configuration else 30
     response = retry_with_backoff(
-        make_request, max_retries=max_retries, base_delay=base_delay, operation_name="API request"
+        lambda: _get_api_request(url, headers, params), operation_name="API request"
     )
 
     if response.status_code == 401:
@@ -337,19 +341,9 @@ def download_and_parse_csv(
         List of CSV records as dictionaries
     """
 
-    # Create a function to execute the download request
-    def make_download_request():
-        return requests.get(download_url)
-
     try:
-        # Use the retry function with exponential backoff
-        max_retries = int(configuration.get("max_retries", "5")) if configuration else 5
-        base_delay = int(configuration.get("base_delay_seconds", "30")) if configuration else 30
         response = retry_with_backoff(
-            make_download_request,
-            max_retries=max_retries,
-            base_delay=base_delay,
-            operation_name="file download",
+            lambda: _get_download_request(download_url), operation_name="file download"
         )
 
         if response.status_code != 200:
@@ -403,8 +397,6 @@ def clean_table_name(name: str) -> str:
     Returns:
         Cleaned table name
     """
-    import re
-
     # Replace spaces and special characters with underscores
     cleaned = re.sub(r"[^a-zA-Z0-9_]", "_", name)
     # Remove multiple consecutive underscores
@@ -413,19 +405,6 @@ def clean_table_name(name: str) -> str:
     cleaned = cleaned.strip("_")
     # Convert to lowercase
     return cleaned.lower()
-
-
-def schema(configuration: dict):
-    """
-    Define the schema function which lets you configure the schema your connector delivers.
-    See the technical reference documentation for more details on the schema function:
-    https://fivetran.com/docs/connector-sdk/technical-reference/connector-sdk-code/connector-sdk-methods#schema
-    Args:
-        configuration: a dictionary that holds the configuration settings for the connector.
-    """
-    # Tables and primary keys are not defined here because the schema is dynamic:
-    # table names and columns vary by report group, channel/studio, territory, and report type.
-    return []
 
 
 def update(configuration: dict, state: dict):
@@ -442,7 +421,7 @@ def update(configuration: dict, state: dict):
     # Validate the configuration to ensure it contains all required values.
     validate_configuration(configuration=configuration)
 
-    log.info("Starting Amazon Video Central sync")
+    log.warning("Example: Source Examples - Amazon Video Central")
 
     # Set sync time at the beginning to prevent data gaps
     current_sync_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")[:-4] + "Z"
@@ -711,8 +690,7 @@ def update(configuration: dict, state: dict):
     )
 
 
-# Create the connector object using the schema and update functions
-connector = Connector(update=update, schema=schema)
+connector = Connector(update=update)
 
 # Check if the script is being run as the main module.
 # This is Python's standard entry method allowing your script to be run directly from the command line or IDE 'run' button.
