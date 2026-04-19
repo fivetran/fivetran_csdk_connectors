@@ -87,21 +87,29 @@ def validate_configuration(configuration: dict):
             raise ValueError(f"Configuration value for '{key}' must not be empty")
 
     # Validate report_group_ids contains at least one non-blank entry
-    report_groups = [rg.strip() for rg in configuration["report_group_ids"].split(",") if rg.strip()]
+    report_groups = [
+        rg.strip() for rg in configuration["report_group_ids"].split(",") if rg.strip()
+    ]
     if not report_groups:
-        raise ValueError("Configuration value for 'report_group_ids' must contain at least one report group ID")
+        raise ValueError(
+            "Configuration value for 'report_group_ids' must contain at least one report group ID"
+        )
 
     # Validate initial_sync_start is a valid ISO-8601 timestamp
     try:
         datetime.fromisoformat(configuration["initial_sync_start"].replace("Z", "+00:00"))
     except ValueError:
-        raise ValueError("Configuration value for 'initial_sync_start' must be a valid ISO-8601 timestamp (e.g. 2020-01-01T00:00:00.000Z)")
+        raise ValueError(
+            "Configuration value for 'initial_sync_start' must be a valid ISO-8601 timestamp (e.g. 2020-01-01T00:00:00.000Z)"
+        )
 
     # Validate fernet_key is a valid Fernet key
     try:
         Fernet(configuration["fernet_key"].encode())
     except Exception:
-        raise ValueError("Configuration value for 'fernet_key' must be a valid base64-encoded Fernet key")
+        raise ValueError(
+            "Configuration value for 'fernet_key' must be a valid base64-encoded Fernet key"
+        )
 
 
 def encrypt_token(token: str, fernet_key: str) -> str:
@@ -183,7 +191,9 @@ def retry_with_backoff(
         # Retry on rate limiting (429) and server errors (5xx)
         if response.status_code in [429, 500, 502, 503, 504]:
             if attempt < max_retries:
-                delay = min(base_delay * (2**attempt), 300)  # Exponential backoff capped at 5 minutes
+                delay = min(
+                    base_delay * (2**attempt), 300
+                )  # Exponential backoff capped at 5 minutes
                 log.warning(
                     f"Retrying {operation_name} (status {response.status_code}) in {delay} seconds (attempt {attempt + 1}/{max_retries + 1})"
                 )
@@ -516,7 +526,6 @@ def update(configuration: dict, state: dict):
 
     # Get access token and new refresh token
     access_token, new_refresh_token = get_access_token(configuration, state)
-
 
     # Process each report group
     for report_group_id in report_group_ids:
