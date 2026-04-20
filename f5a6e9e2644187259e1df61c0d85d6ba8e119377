@@ -1,0 +1,23 @@
+fleetio/README.md
+  c65341604af64277 43-44,87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.1",
+  "base_commit_sha": "f5a6e9e2644187259e1df61c0d85d6ba8e119377",
+  "prompts": {
+    "c65341604af64277": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ccf25ebc-ffc7-444c-bbd5-a23c780547b9",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "fivetran-JenasVimal <jenas.vimal@fivetran.com>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
