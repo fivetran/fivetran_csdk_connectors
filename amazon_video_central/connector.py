@@ -106,7 +106,7 @@ def validate_configuration(configuration: dict):
     # Validate fernet_key is a valid Fernet key
     try:
         Fernet(configuration["fernet_key"].encode())
-    except Exception:
+    except (ValueError, TypeError):
         raise ValueError(
             "Configuration value for 'fernet_key' must be a valid base64-encoded Fernet key"
         )
@@ -472,11 +472,10 @@ def update(configuration: dict, state: dict):
         The state dictionary is empty for the first sync or for any full re-sync
     """
 
-    # Validate the configuration to ensure it contains all required values.
-    validate_configuration(configuration=configuration)
-
     log.warning("Example: Source Examples - Amazon Video Central")
 
+    # Validate the configuration to ensure it contains all required values.
+    validate_configuration(configuration=configuration)
     # Set sync time at the beginning to prevent data gaps
     current_sync_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")[:-4] + "Z"
 
@@ -487,7 +486,7 @@ def update(configuration: dict, state: dict):
 
     # Extract configuration parameters
     account_id = configuration["account_id"]
-    report_group_ids = [rg.strip() for rg in configuration["report_group_ids"].split(",")]
+    report_group_ids = [rg.strip() for rg in configuration["report_group_ids"].split(",") if rg.strip()]
     initial_sync_start = configuration["initial_sync_start"]
 
     # Get the state variable for the sync, if needed.
