@@ -75,7 +75,7 @@ The connector requires the following configuration parameters:
 - `username` – Username for authentication
 - `password` – Password for authentication
 - `database` – The DocumentDB database name to connect to
-- `port` – The port number for the DocumentDB cluster (default: 27017)
+- `port` – The port number for the DocumentDB cluster (default: `27017`)
 
 > Note: When submitting connector code as a [Community Connector](https://github.com/fivetran/fivetran_csdk_connectors/tree/main) in the open-source [Connector SDK repository](https://github.com/fivetran/fivetran_csdk_connectors/tree/main), ensure the `configuration.json` file has placeholder values. When adding the connector to your production repository, ensure that the `configuration.json` file is not checked into version control to protect sensitive information.
 

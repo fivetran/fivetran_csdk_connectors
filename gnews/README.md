@@ -63,7 +63,7 @@ This connector does not require any additional packages beyond those provided by
 
 The connector authenticates with the GNews API using an API key passed as a query parameter in each request. To obtain an API key:
 
-1. Register for an account at [gnews.io](https://gnews.io).
+1. Sign up for the [GNews API](https://gnews.io/register).
 2. Verify your email address to activate your account and unlock API access.
 3. Log in and navigate to your dashboard.
 4. Copy your API key and set it as `api_key` in `configuration.json`.
