@@ -486,7 +486,9 @@ def update(configuration: dict, state: dict):
 
     # Extract configuration parameters
     account_id = configuration["account_id"]
-    report_group_ids = [rg.strip() for rg in configuration["report_group_ids"].split(",") if rg.strip()]
+    report_group_ids = [
+        rg.strip() for rg in configuration["report_group_ids"].split(",") if rg.strip()
+    ]
     initial_sync_start = configuration["initial_sync_start"]
 
     # Get the state variable for the sync, if needed.
