@@ -40,8 +40,8 @@ You can generate your Account Token and API Key [here](https://secure.fleetio.co
 
 ```json
 {
-    "Account-Token": "<accountToken>",
-    "Authorization": "Token <ApiKey>"
+    "Account-Token": "<YOUR_ACCOUNT_TOKEN>",
+    "Authorization": "Token <YOUR_API_KEY>"
 }
 ```
 
@@ -84,9 +84,17 @@ The following tables are synced to the destination:
 - `issues` – Issues in Fleetio allows users to log and track unexpected, unplanned, or "one-time" problems and repairs.
 - `parts` – Parts management is key to running an efficient fleet. Fleetio makes it easy to keep track of Parts data, including Part Manufacturer, Vendor, and Location.
 - `purchase_orders` – Purchase Orders in Fleetio are designed to help standardize Parts procurement through a purchasing workflow.
-- `service_entries` – Service Entries are a simple way to log completed Service Tasks and Issues-the routine Preventative Maintenance and one-time repairs that are performed on Vehicles in Fleetio.
+- `service_entries` – Service Entries are a simple way to log completed Service Tasks and Issues — the routine Preventative Maintenance and one-time repairs that are performed on Vehicles in Fleetio.
 - `submitted_inspection_forms` – Submitted Inspection Forms are Inspection Forms that have been completed and submitted.
-- `vehicles` – A "vehicle" represents any asset or unit of equipment-moving or otherwise-managed in Fleetio.
+- `CONTACTS` – A contact is a person employed by your organization or a person with whom your organization does business.
+- `EXPENSE_ENTRIES` – An expense entry is a record of a cost associated with a vehicle.
+- `FUEL_ENTRIES` – Fuel entries represent a fuel transaction in Fleetio and are an important feature to maximize your data. They contain all of the relevant information for the fuel-up, such as vendor and odometer information.
+- `ISSUES` – Issues in Fleetio allows users to log and track unexpected, unplanned, or "one-time" problems and repairs.
+- `PARTS` – Parts management is key to running an efficient fleet. Fleetio makes it easy to keep track of parts data, including part manufacturer, vendor, and location.
+- `PURCHASE_ORDERS` – Purchase orders in Fleetio are designed to help standardize parts procurement through a purchasing workflow.
+- `SERVICE_ENTRIES` – Service entries are a simple way to log completed service tasks and issues — the routine preventative maintenance and one-time repairs that are performed on vehicles in Fleetio.
+- `SUBMITTED_INSPECTION_FORMS` – Submitted inspection forms are Inspection forms that have been completed and submitted.
+- `VEHICLES` – A vehicle represents any asset or unit of equipment-moving or otherwise-managed in Fleetio.
 
 ## Additional considerations
 
