@@ -49,6 +49,8 @@ The connector requires the following configuration parameters:
 }
 ```
 
+> Important: If you see `SQL30081N`, review the DRDA listener guidance in the [Troubleshooting](#troubleshooting) section.
+
 > Note: When submitting connector code as a community connector in the open-source [Community Connector repository](https://github.com/fivetran/community_connectors/tree/main), ensure the `configuration.json` file has placeholder values. When adding the connector to your production repository, ensure that the `configuration.json` file is not checked into version control to protect sensitive information.
 
 ## Requirements file
@@ -70,14 +72,17 @@ The connector uses username and password authentication to connect to your IBM I
 The connector:
 - Executes SQL queries against your specified table
 - Properly formats datetime values for consistent representation
-- Tracks the latest created_at timestamp to enable incremental syncs
+- Tracks the latest `created` timestamp to enable incremental syncs
 
 The schema used in the example is as follows:
 
 ```json
 {
   "table": "sample_table",
-  "primary_key": ["id"]
+  "primary_key": ["tabid"],
+  "columns": {
+    "tabid": "INT"
+  }
 }
 ```
 
@@ -88,6 +93,14 @@ The connector implements error handling for:
 - Datetime conversion issues with graceful fallback to string representation
 - Missing configuration parameters with clear error messages
 
+## Tables created
+
+The connector creates the following destination table (refer to the `schema()` function in `connector.py`):
+
+| Table          | Primary key | Columns |
+|----------------|---|---|
+| `sample_table` | `tabid` | `tabid` (`INT`) |
+
 ## Additional considerations
 
 > Note: This example was tested using the IBM Informix developer edition local server. If you face any difficulties while writing your connector, please connect with [our professional services](https://support.fivetran.com/hc/en-us/requests/new?isSdkIssue=true).
@@ -96,7 +109,7 @@ The examples provided are intended to help you effectively use Fivetran's Connec
 
 ## Troubleshooting
 
-**Error: `ImportError: DLL load failed while importing ibm_db` on Windows**
+### ImportError: DLL load failed while importing ibm_db on Windows
 
 Issue: This error occurs on Windows because the Python interpreter cannot find the required library files (`clidriver` DLLs) needed by the `ibm_db` package.
 
@@ -119,3 +132,16 @@ You must explicitly provide the path to the `clidriver\\bin` directory before th
     ```
 
 This ensures the connector works for local debugging on Windows and the logic is safely ignored when deployed in Fivetran's production environment.
+
+### SQL30081N during connect (connect timeout or recv socket close)
+
+Issue: Informix has two listener types:
+- `onsoctcp` = normal/native listener
+- `drsoctcp` = DRDA listener
+
+Some `ibm_db` connection paths require DRDA. If you point the connector to only the normal listener, `SQL30081N` can occur.
+
+Resolution:
+
+- If DRDA is already configured in Informix, set `port` in `configuration.json` to the DRDA port.
+- If DRDA is not configured, add a DRDA listener/alias in Informix first, then use that DRDA port in `configuration.json`.

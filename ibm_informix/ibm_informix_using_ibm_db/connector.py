@@ -23,23 +23,86 @@ import json
 from datetime import datetime
 
 
+def _is_safe_identifier(identifier: str) -> bool:
+    """
+    Check whether a SQL identifier is safe for interpolation.
+    Args:
+        identifier: The identifier to validate.
+    Returns:
+        True if the identifier is a valid unquoted SQL identifier.
+    """
+    if not identifier:
+        return False
+
+    if not (identifier[0].isalpha() or identifier[0] == "_"):
+        return False
+
+    for character in identifier:
+        if not (character.isalnum() or character in {"_", "$"}):
+            return False
+
+    return True
+
+
+def validate_configuration(configuration: dict):
+    """
+    Validate the configuration dictionary to ensure it contains all required parameters.
+    This function is called at the start of the update method to ensure that the connector has all necessary configuration values.
+    Args:
+        configuration: a dictionary that holds the configuration settings for the connector.
+    Raises:
+        ValueError: if any required configuration parameter is missing.
+    """
+    required_keys = [
+        "hostname",
+        "port",
+        "database",
+        "username",
+        "password",
+        "table_name",
+    ]
+    for key in required_keys:
+        value = configuration.get(key)
+        if value is None or str(value).strip() == "":
+            raise ValueError(f"Missing required configuration key: {key}")
+
+    try:
+        port = int(str(configuration.get("port")).strip())
+    except ValueError as value_error:
+        raise ValueError("Invalid port: must be an integer between 1 and 65535") from value_error
+    if port < 1 or port > 65535:
+        raise ValueError("Invalid port: must be between 1 and 65535")
+    configuration["port"] = port
+
+    table_name = str(configuration.get("table_name")).strip()
+    table_name_parts = table_name.split(".")
+    if len(table_name_parts) > 2 or not all(
+        _is_safe_identifier(identifier_part) for identifier_part in table_name_parts
+    ):
+        raise ValueError("Invalid table_name: use an unquoted identifier or schema.table format")
+    configuration["table_name"] = table_name
+
+
 # Define the schema function which lets you configure the schema your connector delivers.
 # See the technical reference documentation for more details on the schema function:
 # https://fivetran.com/docs/connectors/connector-sdk/technical-reference#schema
 # The schema function takes one parameter:
 # - configuration: a dictionary that holds the configuration settings for the connector.
 def schema(configuration: dict):
-    # Check if the configuration dictionary has all the required keys
-    required_keys = ["hostname", "port", "database", "username", "password", "table_name"]
-    for key in required_keys:
-        if key not in configuration:
-            raise ValueError(f"Missing required configuration key: {key}")
+    """
+    Define the schema function which lets you configure the schema your connector delivers.
+    See the technical reference documentation for more details on the schema function:
+    https://fivetran.com/docs/connector-sdk/technical-reference/connector-sdk-code/connector-sdk-methods#schema
+    Args:
+        configuration: a dictionary that holds the configuration settings for the connector.
+    """
+    validate_configuration(configuration)
 
     return [
         {
             "table": "sample_table",  # Name of the table in the destination.
-            "primary_key": ["id"],  # Primary key column(s) for the table.
-            # No columns are defined, meaning the types will be inferred.
+            "primary_key": ["tabid"],  # Primary key column(s) for the table.
+            "columns": {"tabid": "INT"},
         }
     ]
 
@@ -120,39 +183,55 @@ def get_datetime_str(date_value):
 # - state: a dictionary contains whatever state you have chosen to checkpoint during the prior sync
 # The state dictionary is empty for the first sync or for any full re-sync
 def update(configuration: dict, state: dict):
+    """
+    Define the update function, which is a required function, and is called by Fivetran during each sync.
+    See the technical reference documentation for more details on the update function
+    https://fivetran.com/docs/connectors/connector-sdk/technical-reference#update
+    Args:
+        configuration: A dictionary containing connection details
+        state: A dictionary containing state information from previous runs
+        The state dictionary is empty for the first sync or for any full re-sync
+    """
     log.warning("Example: Source Examples - IBM Informix")
+    validate_configuration(configuration)
 
     # Connect to the IBM Informix database
     conn = connect_to_db(configuration)
     table_name = configuration.get("table_name")
 
-    # The date format of the created_at column in the database is "YYYY-MM-DD HH:MM:SS"
+    # The date format of the created column in the database is "YYYY-MM-DD HH:MM:SS"
     # Please ensure that while handling the datetime, you are using the correct format for the columns.
     last_created = state.get("last_created", "1990-01-01 00:00:00")
 
     # The SQL query to select all records from the table specified in configuration
     # You can modify this query to suit your needs.
-    sql = f"SELECT * FROM {table_name} WHERE created_at > '{last_created}'"
-    # Execute the SQL query
-    stmt = ibm_db.exec_immediate(conn, sql)
+    # Use a parameter placeholder for the incremental cursor to avoid manual quote escaping in SQL text.
+    sql = f"SELECT * FROM {table_name} WHERE created > ?"
+    # Prepare the SQL template once, then bind data values separately.
+    stmt = ibm_db.prepare(conn, sql)
+    # Bind the current cursor value as a parameter so the driver handles quoting and typing safely.
+    ibm_db.bind_param(stmt, 1, last_created)
+    # Execute the prepared statement with the bound parameter value.
+    ibm_db.execute(stmt)
     # Fetch the first record from the result set
     # The ibm_db.fetch_assoc method fetches the next row from the result set as a dictionary
     data = ibm_db.fetch_assoc(stmt)
     # Iterate over the result set and upsert each record until there are no more records
     while data:
-        # The 'upsert' operation is used to insert or update the record in the destination table.
-        # The op.upsert method is called with two arguments:
-        # - The first argument is the name of the table to upsert the data into, in this case, "sample_table".
-        # - The second argument is a dictionary containing the data to be upserted,
+        # The 'upsert' operation is used to insert or update data in the destination table.
+        # The first argument is the name of the destination table.
+        # The second argument is a dictionary containing the record to be upserted.
         op.upsert(table="sample_table", data=data)
 
-        # Update the last_created variable with the created_at value of the current record
-        last_created_from_data = get_datetime_str(data["created_at"])
-        if last_created_from_data > last_created:
-            last_created = last_created_from_data
+        # Update the last_created variable with the created value of the current record
+        created_value = data.get("created")
+        if created_value is not None:
+            last_created_from_data = get_datetime_str(created_value)
+            if last_created_from_data > last_created:
+                last_created = last_created_from_data
         data = ibm_db.fetch_assoc(stmt)
 
-    log.info("upserted all records from the products table")
+    log.info("Upsert completed for all records.")
 
     # Close the database connection after the operation is complete
     if "conn" in locals() and conn:
@@ -161,22 +240,31 @@ def update(configuration: dict, state: dict):
 
     # Save the progress by checkpointing the state. This is important for ensuring that the sync process can resume
     # from the correct position in case of next sync or interruptions.
+    # You should checkpoint even if you are not using incremental sync, as it tells Fivetran it is safe to write to destination.
+    # For large datasets, checkpoint regularly (e.g., every N records) not only at the end.
     # Learn more about how and where to checkpoint by reading our best practices documentation
-    # (https://fivetran.com/docs/connectors/connector-sdk/best-practices#largedatasetrecommendation).
+    # (https://fivetran.com/docs/connector-sdk/best-practices#optimizingperformancewhenhandlinglargedatasets).
     state["last_created"] = last_created
     op.checkpoint(state)
 
 
-# This creates the connector object that will use the update function defined in this connector.py file.
+# Create the connector object using the schema and update functions
 connector = Connector(update=update, schema=schema)
 
 # Check if the script is being run as the main module.
 # This is Python's standard entry method allowing your script to be run directly from the command line or IDE 'run' button.
-# This is useful for debugging while you write your code. Note this method is not called by Fivetran when executing your connector in production.
-# Please test using the Fivetran debug command prior to finalizing and deploying your connector.
+#
+# IMPORTANT: The recommended way to test your connector is using the Fivetran debug command:
+#   fivetran debug
+#
+# This local testing block is provided as a convenience for quick debugging during development,
+# such as using IDE debug tools (breakpoints, step-through debugging, etc.).
+# Note: This method is not called by Fivetran when executing your connector in production.
+# Always test using 'fivetran debug' prior to finalizing and deploying your connector.
 if __name__ == "__main__":
-    # Open the configuration.json file and load its contents into a dictionary.
+    # Open the configuration.json file and load its contents
     with open("configuration.json", "r") as f:
         configuration = json.load(f)
-    # Adding this code to your `connector.py` allows you to test your connector by running your file directly from your IDE:
+
+    # Test the connector locally
     connector.debug(configuration=configuration)
